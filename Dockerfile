@@ -16,7 +16,6 @@ RUN pip3 install socrate==0.2.0
 
 # Image specific layers under this line
 RUN apk add --no-cache unbound curl bind-tools \
-  && curl -o /etc/unbound/root.hints https://www.internic.net/domain/named.cache \
   && chown root:unbound /etc/unbound \
   && chmod 775 /etc/unbound \
   && apk del --no-cache curl \
@@ -24,6 +23,7 @@ RUN apk add --no-cache unbound curl bind-tools \
 
 COPY start.py /start.py
 COPY unbound.conf /unbound.conf
+COPY unbound.conf.d /etc/unbound/unbound.conf.d
 
 EXPOSE 53/udp 53/tcp
 
